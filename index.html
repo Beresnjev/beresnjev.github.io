@@ -126,9 +126,23 @@
 
   let scale = 1;
 
+  const phrases = [
+    "Неправильный ответ!",
+    "Подумай ещё раз!",
+    "Не угадала",
+    "Ошибка нуба"
+  ];
+
+  let phraseIndex = 0;
+
   noBtn.addEventListener("click", () => {
-    scale += 0.8;
+    scale += 0.4;
     yesBtn.style.transform = `scale(${scale})`;
+
+    // меняем текст
+    const title = document.querySelector("h1");
+    title.textContent = phrases[phraseIndex];
+    phraseIndex = (phraseIndex + 1) % phrases.length;
 
     if (scale > 12) {
       yesBtn.style.position = "fixed";
