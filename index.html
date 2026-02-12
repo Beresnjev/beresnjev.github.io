@@ -245,11 +245,15 @@
   });
 </script>
 
-<audio id="bgMusic" autoplay loop>
+<audio id="bgMusic" loop>
   <source src="assets/sound/background.mp3" type="audio/mpeg">
 </audio>
 
 <script>
+  document.addEventListener("click", () => {
+    music.play().catch(()=>{});
+  }, { once:true });
+
   const music = document.getElementById("bgMusic");
   music.volume = 0;
 
@@ -300,6 +304,10 @@
     "assets/img/8.jpg",
     "assets/img/9.jpg",
     "assets/img/10.jpg",
+    "assets/img/11.jpg",
+    "assets/img/12.jpg",
+    "assets/img/13.jpg",
+    "assets/img/14.jpg",
   ];
 
   let slideIndex = 0;
