@@ -113,6 +113,76 @@
       border-radius:20px;
       box-shadow:0 0 40px rgba(255,255,255,0.4);
     }
+
+    #celebration{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:linear-gradient(135deg,#ff758c,#ff7eb3);
+      z-index:10001;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      text-align:center;
+      animation:fadeIn 1s ease;
+    }
+
+    #celebration h2{
+      color:white;
+      font-size:3rem;
+      margin-bottom:40px;
+      text-shadow:0 0 25px rgba(255,255,255,0.8);
+    }
+
+    #startShow{
+      font-size:1.8rem;
+      padding:20px 60px;
+      border:none;
+      border-radius:60px;
+      background:white;
+      color:#ff4e50;
+      font-weight:bold;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    #startShow:hover{
+      transform:scale(1.15);
+    }
+    .confetti{
+      position:fixed;
+      width:10px;
+      height:10px;
+      background:red;
+      top:-10px;
+      animation:fall linear forwards;
+    }
+
+    @keyframes fall{
+      to{
+        transform:translateY(310vh) rotate(720deg);
+        opacity:0;
+      }
+    }
+
+    .corner{
+      position:absolute;
+      max-width:400px;
+      height:auto;
+      animation:fadeIn 1s ease;
+    }
+
+    .corner.left{
+      top:20px;
+      left:20px;
+    }
+
+    .corner.right{
+      top:20px;
+      right:20px;
+    }
+
+
   </style>
 </head>
 <body>
@@ -194,6 +264,22 @@
   }, 100);
 </script>
 
+<div id="celebration">
+
+  <img src="assets/img/meme/cat.png" class="corner left">
+  <img src="assets/img/meme/dog.png" class="corner right">
+
+  <h2>УРА!!! Я ТЕБЯ ЛЮБЛЮ!!! ❤️</h2>
+  <button id="startShow">МЫ 💞</button>
+
+</div>
+
+
+<audio id="confettiSound">
+  <source src="assets/sound/romantic.mp3" type="audio/mpeg">
+</audio>
+
+
 <div id="slideshow">
   <img id="slideImg" src="assets/img/1.jpg">
 </div>
@@ -218,18 +304,51 @@
 
   let slideIndex = 0;
 
+  const celebration = document.getElementById("celebration");
+  const startShow = document.getElementById("startShow");
+  const confettiSound = document.getElementById("confettiSound");
+
+  function launchConfetti(){
+    for(let i=0;i<150;i++){
+      const c=document.createElement("div");
+      c.className="confetti";
+      c.style.left=Math.random()*100+"vw";
+      c.style.background=`hsl(${Math.random()*360},100%,60%)`;
+      c.style.animationDuration=(2+Math.random()*10)+"s";
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),10000);
+    }
+  }
+
   yesBtn.addEventListener("click", () => {
-    musicPlayer.src = "assets/sound/golden_brown.mp3";
-    musicPlayer.volume = 1;
+
+    music.pause();
+
+    celebration.style.display="flex";
+    confettiSound.loop = true;
+    confettiSound.play();
+    launchConfetti();
+
+  });
+
+  startShow.addEventListener("click",()=>{
+
+    celebration.style.display="none";
+
+    confettiSound.pause();
+    musicPlayer.src="assets/sound/golden_brown.mp3";
+    musicPlayer.volume=1;
     musicPlayer.play();
 
-    slideshow.style.display = "flex";
+    slideshow.style.display="flex";
 
-    setInterval(() => {
-      slideIndex = (slideIndex + 1) % slides.length;
-      slideImg.src = slides[slideIndex];
-    }, 4000);
+    setInterval(()=>{
+      slideIndex=(slideIndex+1)%slides.length;
+      slideImg.src=slides[slideIndex];
+    },4000);
+
   });
+
 </script>
 
 </body>
