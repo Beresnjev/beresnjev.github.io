@@ -120,6 +120,27 @@
   }
 
   setInterval(createHeart, 300);
+
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+
+  let scale = 1;
+
+  noBtn.addEventListener("click", () => {
+    scale += 0.8;
+    yesBtn.style.transform = `scale(${scale})`;
+
+    if (scale > 12) {
+      yesBtn.style.position = "fixed";
+      yesBtn.style.left = "0";
+      yesBtn.style.top = "0";
+      yesBtn.style.width = "100vw";
+      yesBtn.style.height = "100vh";
+      yesBtn.style.borderRadius = "0";
+      yesBtn.style.fontSize = "5rem";
+      yesBtn.innerText = "ДА 💖";
+    }
+  });
 </script>
 
 <audio id="bgMusic" autoplay loop>
@@ -129,7 +150,6 @@
 <script>
   const music = document.getElementById("bgMusic");
   music.volume = 0;
-
 
   let volume = 0;
   const fade = setInterval(() => {
