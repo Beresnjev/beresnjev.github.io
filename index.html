@@ -82,6 +82,7 @@
       color: rgba(255,255,255,0.7);
       animation: float 6s linear infinite;
       font-size: 20px;
+      z-index: 10000;
     }
 
     @keyframes float {
@@ -93,6 +94,24 @@
         transform: translateY(-10vh) scale(1.5);
         opacity: 0;
       }
+    }
+
+    #slideshow {
+      display:none;
+      position:fixed;
+      inset:0;
+      background:#ffc0cb; /* розовый фон */
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      z-index:9999;
+    }
+
+    #slideshow img {
+      max-width:90%;
+      max-height:80%;
+      border-radius:20px;
+      box-shadow:0 0 40px rgba(255,255,255,0.4);
     }
   </style>
 </head>
@@ -139,7 +158,6 @@
     scale += 0.4;
     yesBtn.style.transform = `scale(${scale})`;
 
-    // меняем текст
     const title = document.querySelector("h1");
     title.textContent = phrases[phraseIndex];
     phraseIndex = (phraseIndex + 1) % phrases.length;
@@ -176,9 +194,8 @@
   }, 100);
 </script>
 
-
-<div id="slideshow" style="display:none; position:fixed; inset:0; background:black; justify-content:center; align-items:center; flex-direction:column; z-index:9999;">
-  <img id="slideImg" src="assets/img/1.jpg" style="max-width:90%; max-height:80%; border-radius:20px; box-shadow:0 0 40px rgba(255,255,255,0.4);">
+<div id="slideshow">
+  <img id="slideImg" src="assets/img/1.jpg">
 </div>
 
 <script>
@@ -202,18 +219,16 @@
   let slideIndex = 0;
 
   yesBtn.addEventListener("click", () => {
-    // смена музыки
-    musicPlayer.src = "assets/sound/love.mp3";
+    musicPlayer.src = "assets/sound/golden_brown.mp3";
     musicPlayer.volume = 1;
     musicPlayer.play();
 
-    // показать слайдшоу
     slideshow.style.display = "flex";
 
     setInterval(() => {
       slideIndex = (slideIndex + 1) % slides.length;
       slideImg.src = slides[slideIndex];
-    }, 2000);
+    }, 4000);
   });
 </script>
 
